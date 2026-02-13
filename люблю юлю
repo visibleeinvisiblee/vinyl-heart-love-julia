@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VINYL CULT</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2.5rem 2rem;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2em;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      letter-spacing: 0.5em;
+      opacity: 0.6;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .vinyl-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 2rem auto;
+    }
+
+    .vinyl {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: url('photo_2025-08-20_16-28-48.jpg') center/cover no-repeat;  /* ← зміни на свій шлях до файлу */
+      box-shadow: 
+        0 0 40px rgba(255,0,0,0.15),
+        inset 0 0 60px rgba(0,0,0,0.8);
+      animation: spin 3.5s linear infinite;
+      animation-play-state: paused;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .play-pause-btn {
+      margin-top: 2.5rem;
+      padding: 18px 60px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .play-pause-btn:hover {
+      background: #ddd;
+      transform: scale(1.06);
+    }
+
+    .play-pause-btn.playing {
+      background: #ff0044;
+      color: white;
+    }
+
+    audio {
+      display: none;
+    }
+
+    /* --------- MOBILE ADAPTATION --------- */
+    @media (max-width: 600px) {
+      body {
+        justify-content: flex-start;
+        padding: 2.5rem 1.25rem 2rem;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+        letter-spacing: 0.18em;
+        margin-bottom: 0.6rem;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 0.25em;
+        margin-bottom: 2rem;
+      }
+
+      .vinyl-container {
+        width: min(70vw, 220px);
+        height: min(70vw, 220px);
+        margin: 1.5rem auto 1.75rem;
+      }
+
+      .play-pause-btn {
+        width: 100%;
+        max-width: 320px;
+        padding: 14px 20px;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>VINYL CULT</h1>
+  <div class="subtitle">analog heart • digital voice</div>
+
+  <div class="vinyl-container">
+    <div class="vinyl" id="vinyl"></div>
+  </div>
+
+  <button class="play-pause-btn" id="toggleBtn">▶ PLAY</button>
+
+  <audio id="player" loop>
+    <source src="люблю юлю.mp3" type="audio/mpeg">
+    <!-- Якщо є .ogg або .wav — додай ще один <source> -->
+  </audio>
+
+  <script>
+    const audio   = document.getElementById("player");
+    const vinyl   = document.getElementById("vinyl");
+    const btn     = document.getElementById("toggleBtn");
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        vinyl.style.animationPlayState = "running";
+        btn.textContent = "■ PAUSE";
+        btn.classList.add("playing");
+      } else {
+        audio.pause();
+        vinyl.style.animationPlayState = "paused";
+        btn.textContent = "▶ PLAY";
+        btn.classList.remove("playing");
+      }
+    }
+
+    btn.addEventListener("click", togglePlay);
+
+    // Якщо хочеш, щоб при закінченні треку кнопка поверталась в PLAY
+    // (хоча в тебе loop, тому не обов'язково)
+    // audio.addEventListener("ended", () => {
+    //   vinyl.style.animationPlayState = "paused";
+    //   btn.textContent = "▶ PLAY";
+    //   btn.classList.remove("playing");
+    // });
+  </script>
+
+</body>
+</html>
